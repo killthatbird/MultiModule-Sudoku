@@ -1,0 +1,146 @@
+buildscript {
+    ext {
+        // SpringBoot framework
+        springBootVersion = "1.4.3.RELEASE"// 2016,1223
+
+        // Other
+        // mySql
+        // mysql-connector-java
+        mysqlVersion = "6.0.5"// 2016,1113
+        // Lombok
+        lombokVersion = "1.16.12"// 2016,1203
+        // Flyway
+        flywayVersion = "4.0.3"// 2017,0103
+        // Quartz
+        quartzVersion = "2.2.3"// 2017,0103
+        // EclipseCollections
+        ecVersion = "8.0.0"// 2016,1011
+        // CheckerFramework
+        checkerframeworkVersion = "2.1.7"// 2017,0108
+        // Selenide
+        selenideVersion = "4.2"// 2016,1226
+    }
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework:springloaded:1.2.6.RELEASE")
+    }
+
+}
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'findbugs'
+    id 'pmd'
+    id 'project-report'
+    id 'war'
+    id "com.moowork.grunt" version "1.0.1"
+    id "com.moowork.node" version "1.0.1"
+    id "org.sonarqube" version "2.2.1"
+    id "org.springframework.boot" version "1.4.3.RELEASE"
+}
+
+allprojects {
+    version = "0.0.0"
+}
+
+subprojects {
+
+    apply plugin: 'org.springframework.boot'
+
+    // ソースと実行ファイルのJava バージョン
+    def jdkVersion = 1.8
+    sourceCompatibility = jdkVersion
+    targetCompatibility = jdkVersion
+    def defaultEncoding = 'UTF-8'
+    tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
+
+    javadoc {
+        options.charSet = defaultEncoding
+        options.encoding = defaultEncoding
+        options.addBooleanOption('Xdoclint:none', true)
+    }
+    springBoot {
+        executable = true
+    }
+
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+
+    ext['thymeleaf.version'] = '3.0.2.RELEASE'// 2016,1205
+    ext['thymeleaf-layout-dialect.version'] = '2.1.2'// 2016,1220
+    dependencies {
+        // SpringBoot projects
+        compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-batch:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-logging:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-parent:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
+        testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+
+        // Others
+        // JDBC Drivers
+        runtime("mysql:mysql-connector-java:$mysqlVersion")
+        // Lombok
+        compileOnly("org.projectlombok:lombok:$lombokVersion")
+        // Flyway
+        compile("org.flywaydb:flyway-core:$flywayVersion")
+        // Quartz
+        compile("org.quartz-scheduler:quartz:$quartzVersion")
+        compile("org.quartz-scheduler:quartz-jobs:$quartzVersion")
+        // EclipseCollections
+        compile("org.eclipse.collections:eclipse-collections:$ecVersion")
+        compile("org.eclipse.collections:eclipse-collections-api:$ecVersion")
+        // CheckerFramework
+        compile("org.checkerframework:checker-qual:$checkerframeworkVersion")
+        testCompile("org.checkerframework:jdk8:$checkerframeworkVersion")
+        // Selenide
+        testCompile("com.codeborne:selenide:$selenideVersion")
+
+        compile("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
+        compile("org.springframework:spring-context-support:4.3.5.RELEASE")
+
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://localhost:9000/"
+        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+    }
+}
+pmd {
+    ruleSets = [
+            'java-braces',
+            'java-codesize',
+    ]
+}
+project(':micro-batch') {
+    dependencies {
+        compile project(':micro-core')
+    }
+}
+project(':micro-web') {
+    dependencies {
+        compile project(':micro-core')
+    }
+}
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.3'
+}
