@@ -22,13 +22,10 @@ buildscript {
     }
     repositories {
         jcenter()
-        mavenLocal()
-        mavenCentral()
     }
     dependencies {
         classpath("org.springframework:springloaded:1.2.6.RELEASE")
     }
-
 }
 
 plugins {
@@ -67,36 +64,44 @@ subprojects {
         options.encoding = defaultEncoding
         options.addBooleanOption('Xdoclint:none', true)
     }
+
     springBoot {
         executable = true
     }
 
     repositories {
         jcenter()
-        mavenLocal()
-        mavenCentral()
     }
 
-    ext['thymeleaf.version'] = '3.0.2.RELEASE'// 2016,1205
+    configurations {
+        checkerFrameworkAnnotatedJDK
+        annotationProcessors
+    }
+
+    ext['thymeleaf.version'] = '3.0.3.RELEASE'// 2016,1205
     ext['thymeleaf-layout-dialect.version'] = '2.1.2'// 2016,1220
+    ext['thymeleaf-extras-java8time.version'] = '3.0.0.RELEASE'
+    ext['thymeleaf-extras-data-attribute.version'] = '2.0.1'
     dependencies {
+
         // SpringBoot projects
         compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-batch:$springBootVersion")
+        compile("org.springframework.boot:spring-boot-starter-cache:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-logging:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-parent:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
         testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
-        compile("org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
 
         // Others
         // JDBC Drivers
         runtime("mysql:mysql-connector-java:$mysqlVersion")
         // Lombok
+        annotationProcessors("org.projectlombok:lombok:$lombokVersion")
         compileOnly("org.projectlombok:lombok:$lombokVersion")
         // Flyway
         compile("org.flywaydb:flyway-core:$flywayVersion")
@@ -107,14 +112,37 @@ subprojects {
         compile("org.eclipse.collections:eclipse-collections:$ecVersion")
         compile("org.eclipse.collections:eclipse-collections-api:$ecVersion")
         // CheckerFramework
-        compile("org.checkerframework:checker-qual:$checkerframeworkVersion")
-        testCompile("org.checkerframework:jdk8:$checkerframeworkVersion")
+        checkerFrameworkAnnotatedJDK("org.checkerframework:jdk8:$checkerframeworkVersion")
+        annotationProcessors("org.checkerframework:checker:$checkerframeworkVersion")
+        compileOnly("org.checkerframework:checker-qual:$checkerframeworkVersion")
+        compile("com.google.code.findbugs:jsr305:3.0.1")
+
         // Selenide
         testCompile("com.codeborne:selenide:$selenideVersion")
 
         compile("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
-        compile("org.springframework:spring-context-support:4.3.5.RELEASE")
 
+    }
+
+    compileJava {
+        def processors = [
+                'org.checkerframework.checker.nullness.NullnessChecker',
+                'lombok.launch.AnnotationProcessorHider\$AnnotationProcessor',
+        ]
+// CheckerFramework 不具合
+//        options.compilerArgs = [
+//                '-processor', processors.join(','),
+//                '-processorpath', "${configurations.annotationProcessors.asPath}",
+//                '-AprintErrorStack',
+//                "-Xbootclasspath/p:${configurations.checkerFrameworkAnnotatedJDK.asPath}",
+//                '-Xlint:unchecked'
+//        ]
+    }
+
+    idea {
+        module {
+            scopes.PROVIDED.plus += [configurations.annotationProcessors]
+        }
     }
 }
 
@@ -125,22 +153,26 @@ sonarqube {
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
     }
 }
+
 pmd {
     ruleSets = [
             'java-braces',
             'java-codesize',
     ]
 }
+
 project(':micro-batch') {
     dependencies {
         compile project(':micro-core')
     }
 }
+
 project(':micro-web') {
     dependencies {
         compile project(':micro-core')
     }
 }
+
 task wrapper(type: Wrapper) {
     gradleVersion = '3.3'
 }

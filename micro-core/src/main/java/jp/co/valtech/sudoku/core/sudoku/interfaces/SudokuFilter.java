@@ -4,6 +4,7 @@ import jp.co.valtech.sudoku.core.bean.NumberPlaceBean;
 import jp.co.valtech.sudoku.core.config.CommonConstant;
 import jp.co.valtech.sudoku.core.config.enums.Difficulty;
 import jp.co.valtech.sudoku.core.exception.SudokuApplicationException;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -22,9 +23,18 @@ public interface SudokuFilter {
 	 * @param size
 	 * @return
 	 */
-	default int getWarmEatenValue(String level, int size) {
+	default int getWarmEatenValue(@NonNull String level, int size) {
+		if (level == null) {
+			return 0;
+		}
 		String key = level.toUpperCase().concat(Integer.toString(size));
-		return Difficulty.getDifficulty(key).getValue();
+		Difficulty difficulty = Difficulty.getDifficulty(key);
+		if (difficulty == null) {
+			return 0;
+		} else {
+			return difficulty.getValue();
+		}
+
 	}
 
 	/**
@@ -32,11 +42,13 @@ public interface SudokuFilter {
 	 * @param key
 	 * @throws
 	 */
-	default void filteredCell(NumberPlaceBean numberPlaceBean, String key) throws SudokuApplicationException {
+	default void filteredCell(@NonNull NumberPlaceBean numberPlaceBean, String key) throws SudokuApplicationException {
 		try {
 			PropertyDescriptor properties = new PropertyDescriptor(key, numberPlaceBean.getClass());
 			Method setter = properties.getWriteMethod();
-			setter.invoke(numberPlaceBean, CommonConstant.ZERO);
+			if (setter != null) {
+				setter.invoke(numberPlaceBean, CommonConstant.ZERO);
+			}
 		} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
 			e.printStackTrace();

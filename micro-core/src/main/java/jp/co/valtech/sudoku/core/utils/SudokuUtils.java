@@ -45,7 +45,10 @@ public class SudokuUtils {
 	 */
 	public static int calculationScore(int selectType, String selectLevel) throws SudokuApplicationException {
 		String key = selectLevel.toUpperCase().concat(Integer.toString(selectType));
-		Difficulty difficulty = Difficulty.getDifficulty(key);
+		@Nullable Difficulty difficulty = Difficulty.getDifficulty(key);
+		if (difficulty == null) {
+			throw new SudokuApplicationException();
+		}
 		switch (difficulty) {
 			case EASY4:
 				return 2000;
@@ -73,8 +76,14 @@ public class SudokuUtils {
 		NumberPlaceBean numberPlaceBean = new ModelMapper().map(answerInfoTbl, NumberPlaceBean.class);
 		String answerKey = numberPlaceBean.getAnswerKey();
 		String[] valueArray = answerKey.split("");
-		Type type = Type.getType(numberPlaceBean.getType());
-		ListIterator<String> itr = ESListWrapUtil.createCells(type.getSize(), 0).listIterator();
+		int size = 0;
+		@Nullable Type type = Type.getType(numberPlaceBean.getType());
+		if (type == null) {
+
+		} else {
+			size = type.getSize();
+		}
+		ListIterator<String> itr = ESListWrapUtil.createCells(size, 0).listIterator();
 		try {
 			for (String value : valueArray) {
 				setCell(numberPlaceBean, itr.next(), Integer.parseInt(value));
@@ -96,7 +105,9 @@ public class SudokuUtils {
 		try {
 			PropertyDescriptor properties = new PropertyDescriptor(key, numberPlaceBean.getClass());
 			Method setter = properties.getWriteMethod();
-			setter.invoke(numberPlaceBean, value);
+			if (setter != null) {
+				setter.invoke(numberPlaceBean, value);
+			}
 		} catch (IntrospectionException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
 			e.printStackTrace();

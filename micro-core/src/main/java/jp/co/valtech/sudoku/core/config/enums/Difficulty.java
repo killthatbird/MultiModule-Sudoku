@@ -62,6 +62,9 @@ public enum Difficulty {
 	 */
 	@Nullable
 	public static Difficulty getDifficulty(@Nullable final String key) {
+		if (key == null) {
+			return null;
+		}
 		for (Difficulty difficulty : Difficulty.values()) {
 			if (difficulty.toString().equals(key)) {
 				return difficulty;

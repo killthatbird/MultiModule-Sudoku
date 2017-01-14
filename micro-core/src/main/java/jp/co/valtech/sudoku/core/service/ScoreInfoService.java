@@ -23,9 +23,11 @@ import java.time.LocalDateTime;
 @Service
 public class ScoreInfoService extends ServiceBase {
 
+	@SuppressWarnings("initialization.fields.uninitialized")
 	@Autowired
 	private ScoreRepository scoreRepository;
 
+	@SuppressWarnings("initialization.fields.uninitialized")
 	@Autowired
 	private ModelMapper modelMapper;
 

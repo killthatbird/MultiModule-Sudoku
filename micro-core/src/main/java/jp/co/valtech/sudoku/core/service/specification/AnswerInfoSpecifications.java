@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -32,9 +31,8 @@ public class AnswerInfoSpecifications {
 	 * @version 1.0
 	 * @since 1.0
 	 */
-	@Nullable
 	public static Specification<AnswerInfoTbl> typeContains(int selectType) {
-		return selectType == 0 ? null : (root, query, builder) -> builder.equal(root.get(TYPE), selectType);
+		return (root, query, builder) -> builder.equal(root.get(TYPE), selectType);
 	}
 
 	/**
@@ -80,8 +78,8 @@ public class AnswerInfoSpecifications {
 	 * @since 1.0
 	 */
 	@Nullable
-	public static Specification<AnswerInfoTbl> keyHashContains(@Nullable String keyHash, int selectorKeyHash) {
-		if (StringUtils.isEmpty(keyHash)) {
+	public static Specification<AnswerInfoTbl> keyHashContains(String keyHash, int selectorKeyHash) {
+		if (keyHash == null) {
 			return null;
 		} else {
 			Selector selector = Selector.getSelector(selectorKeyHash);

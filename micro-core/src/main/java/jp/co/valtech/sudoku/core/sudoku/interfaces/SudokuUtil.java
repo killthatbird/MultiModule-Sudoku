@@ -1,7 +1,6 @@
 package jp.co.valtech.sudoku.core.sudoku.interfaces;
 
 import jp.co.valtech.sudoku.core.config.CommonConstant;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.security.MessageDigest;
@@ -18,7 +17,6 @@ public interface SudokuUtil {
 	 * @param numberPlace
 	 * @return
 	 */
-	@NonNull
 	default String createAnswerKey(int[][] numberPlace) {
 		StringBuilder answerKey = new StringBuilder();
 		for (int[] arrays : numberPlace) {
@@ -37,7 +35,7 @@ public interface SudokuUtil {
 	 * @return　SHA256変換した文字列かnull
 	 */
 	@Nullable
-	default String convertToSha256(@NonNull String str) {
+	default String convertToSha256(String str) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(str.getBytes(CommonConstant.UTF8));

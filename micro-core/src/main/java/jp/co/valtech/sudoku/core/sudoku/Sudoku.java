@@ -10,10 +10,8 @@ import jp.co.valtech.sudoku.core.utils.ESListWrapUtil;
 import jp.co.valtech.sudoku.core.utils.SudokuUtils;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ListIterator;
-import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -45,6 +43,7 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
 	public Sudoku(int type) {
 		this.size = type;
 		this.numberPlaceArray = new int[this.size][this.size];
+		this.numberPlaceBean = new NumberPlaceBean();
 	}
 
 	/**
@@ -62,7 +61,7 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
 	private void destroy() {
 		this.size = 0;
 		this.numberPlaceArray = new int[0][0];
-		this.numberPlaceBean = null;
+		this.numberPlaceBean = new NumberPlaceBean();
 	}
 
 	/**
@@ -73,10 +72,8 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
 	 * @version 1.0
 	 * @since 1.0
 	 */
-	@Nullable
 	public NumberPlaceBean generate() {
 		createAnswerArray();
-		this.numberPlaceBean = new NumberPlaceBean();
 		arrayConvertBean();
 		return this.numberPlaceBean;
 	}
@@ -91,7 +88,6 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
 	 * @version 1.0
 	 * @since 1.0
 	 */
-	@Nullable
 	public NumberPlaceBean filteredOfLevel(NumberPlaceBean bean, String level) {
 		this.numberPlaceBean = bean;
 		filteredOfLevel(level);
@@ -116,20 +112,21 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
 	}
 
 	private void arrayConvertBean() {
-		this.numberPlaceBean.setType(this.size);
-		this.numberPlaceBean.setNo(CommonConstant.ZERO);
 		String answerKey = createAnswerKey(this.numberPlaceArray);
-		this.numberPlaceBean.setAnswerKey(answerKey);
-		Optional<String> keyHashOpt = Optional.ofNullable(convertToSha256(answerKey));
-		if (keyHashOpt.isPresent()) {
-			this.numberPlaceBean.setKeyHash(keyHashOpt.get());
-			setCells();
+		String keyHash = convertToSha256(answerKey);
+		if (keyHash == null) {
+			this.numberPlaceBean = new NumberPlaceBean();
 		} else {
-			this.numberPlaceBean = null;
+			this.numberPlaceBean.setType(this.size);
+			this.numberPlaceBean.setNo(CommonConstant.ZERO);
+			this.numberPlaceBean.setAnswerKey(answerKey);
+			this.numberPlaceBean.setKeyHash(keyHash);
+			setCells();
 		}
 	}
 
 	private void setCells() {
+
 		ListIterator<String> itr = ESListWrapUtil.createCells(this.size, 0).listIterator();
 		int x = 0;
 		int y = 0;
@@ -145,7 +142,7 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
 		} catch (SudokuApplicationException e) {
 			e.printStackTrace();
 			log.error("やらかしています。");
-			this.numberPlaceBean = null;
+			this.numberPlaceBean = new NumberPlaceBean();
 		}
 	}
 
@@ -159,7 +156,7 @@ public class Sudoku implements SudokuFilter, SudokuGenerator, SudokuUtil, AutoCl
 		} catch (SudokuApplicationException e) {
 			e.printStackTrace();
 			log.error("やらかしています。");
-			this.numberPlaceBean = null;
+			this.numberPlaceBean = new NumberPlaceBean();
 		}
 
 	}

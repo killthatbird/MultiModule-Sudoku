@@ -13,7 +13,7 @@ import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.factory.SortedMaps;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-import java.util.Comparator;
+import java.util.Collections;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -60,7 +60,7 @@ public class ESMapWrapUtil {
 	 * @return 変更不能のmapを返却します
 	 */
 	public static ImmutableSortedMap<String, Integer> getSelectorNo() {
-		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Comparator.reverseOrder());
+		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());
 		setSelector(map, Selector.PERFECT_MATCH);
 		setSelector(map, Selector.AROUND5);
 		setSelector(map, Selector.MORE_BIG);
@@ -75,7 +75,7 @@ public class ESMapWrapUtil {
 	 * @return 変更不能のmapを返却します
 	 */
 	public static ImmutableSortedMap<String, Integer> getSelectorKeyHash() {
-		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Comparator.reverseOrder());
+		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());
 		setSelector(map, Selector.PERFECT_MATCH);
 		setSelector(map, Selector.FORWARD_MATCH);
 		setSelector(map, Selector.BACKWARD_MATCH);
@@ -90,7 +90,7 @@ public class ESMapWrapUtil {
 	 * @return 変更不能のmapを返却します
 	 */
 	public static ImmutableSortedMap<String, Integer> getSelectorScore() {
-		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Comparator.reverseOrder());
+		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());
 		setSelector(map, Selector.PERFECT_MATCH);
 		setSelector(map, Selector.MORE_BIG);
 		setSelector(map, Selector.MORE_SMALL);
@@ -104,7 +104,7 @@ public class ESMapWrapUtil {
 	 * @return 変更不能のmapを返却します
 	 */
 	public static ImmutableSortedMap<String, Integer> getSelectorName() {
-		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Comparator.reverseOrder());
+		MutableSortedMap<String, Integer> map = SortedMaps.mutable.of(Collections.reverseOrder());
 		setSelector(map, Selector.PERFECT_MATCH);
 		setSelector(map, Selector.FORWARD_MATCH);
 		setSelector(map, Selector.BACKWARD_MATCH);

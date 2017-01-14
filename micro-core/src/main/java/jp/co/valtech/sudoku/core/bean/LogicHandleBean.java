@@ -7,6 +7,7 @@ import jp.co.valtech.sudoku.core.service.ScoreInfoService;
 import jp.co.valtech.sudoku.core.service.ServiceBase;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.factory.Maps;
 import org.springframework.ui.Model;
@@ -22,8 +23,11 @@ import org.springframework.ui.Model;
 @Accessors(chain = true)
 public class LogicHandleBean {
 
+	@Nullable
 	private BaseForm form;
+	@Nullable
 	private Model model;
+
 	private MutableMap<String, ServiceBase> serviceHandleMap;
 
 	/**
@@ -49,8 +53,13 @@ public class LogicHandleBean {
 	 * @version 1.0
 	 * @since 1.0
 	 */
+	@Nullable
 	public ServiceBase getService(Tables tableName) {
-		return this.serviceHandleMap.get(tableName.name());
+		if (tableName == null) {
+			return null;
+		} else {
+			return this.serviceHandleMap.get(tableName.name());
+		}
 	}
 
 	/**

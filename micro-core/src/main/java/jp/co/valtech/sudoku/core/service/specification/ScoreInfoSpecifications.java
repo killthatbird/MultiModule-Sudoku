@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.JoinType;
 import java.time.LocalDate;
@@ -40,6 +39,7 @@ public class ScoreInfoSpecifications {
 	 * @since 1.0
 	 */
 	@Nullable
+	@SuppressWarnings("unchecked")
 	public static Specification<AnswerInfoTbl> scoreContains(int score, int selectorScore) {
 		if (score == 0) {
 			return null;
@@ -71,8 +71,9 @@ public class ScoreInfoSpecifications {
 	 * @since 1.0
 	 */
 	@Nullable
+	@SuppressWarnings("unchecked")
 	public static Specification<AnswerInfoTbl> nameContains(@Nullable String name, int selectorName) {
-		if (StringUtils.isEmpty(name)) {
+		if (name == null) {
 			return null;
 		} else {
 			Selector selector = Selector.getSelector(selectorName);

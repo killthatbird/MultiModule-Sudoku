@@ -4,21 +4,20 @@ import jp.co.valtech.sudoku.core.bean.NumberPlaceBean;
 import jp.co.valtech.sudoku.core.bean.SearchConditionBean;
 import jp.co.valtech.sudoku.core.domain.AnswerInfoTbl;
 import jp.co.valtech.sudoku.core.service.repository.AnswerInfoRepository;
-import lombok.NonNull;
+import jp.co.valtech.sudoku.core.service.specification.AnswerInfoSpecifications;
+import jp.co.valtech.sudoku.core.service.specification.ScoreInfoSpecifications;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static jp.co.valtech.sudoku.core.service.specification.AnswerInfoSpecifications.*;
-import static jp.co.valtech.sudoku.core.service.specification.ScoreInfoSpecifications.*;
 
 /**
  * ANSWER_INFO_TBLへのサービスクラスです。
@@ -34,9 +33,11 @@ public class AnswerInfoService extends ServiceBase {
 
 	private static final String NO = "no";
 
+	@SuppressWarnings("initialization.fields.uninitialized")
 	@Autowired
 	private AnswerInfoRepository answerInfoRepository;
 
+	@SuppressWarnings("initialization.fields.uninitialized")
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -113,14 +114,31 @@ public class AnswerInfoService extends ServiceBase {
 	 * @since 1.0
 	 */
 	@Nullable
-	public Page<AnswerInfoTbl> findRecords(@NonNull SearchConditionBean condition, Pageable pageable) {
-		Specifications answerSpecification = Specifications
-						.where(typeContains(condition.getType()))
-						.and(noContains(condition.getNo(), condition.getSelectorNo()))
-						.and(keyHashContains(condition.getKeyHash(), condition.getSelectorKeyHash()))
-						.and(scoreContains(condition.getScore(), condition.getSelectorScore()))
-						.and(nameContains(condition.getName(), condition.getSelectorName()))
-						.and(dateContains(condition.getDateStart(), condition.getDateEnd()));
+	public Page<AnswerInfoTbl> findRecords(SearchConditionBean condition, Pageable pageable) {
+
+		Specification<AnswerInfoTbl> typeContains = AnswerInfoSpecifications.typeContains(condition.getType());
+		Specification<AnswerInfoTbl> noContains = AnswerInfoSpecifications.noContains(condition.getNo(), condition.getSelectorNo());
+		Specification<AnswerInfoTbl> keyHashContains = AnswerInfoSpecifications.keyHashContains(condition.getKeyHash(), condition.getSelectorKeyHash());
+		Specification<AnswerInfoTbl> scoreContains = ScoreInfoSpecifications.scoreContains(condition.getScore(), condition.getSelectorScore());
+		Specification<AnswerInfoTbl> nameContains = ScoreInfoSpecifications.nameContains(condition.getName(), condition.getSelectorName());
+		Specification<AnswerInfoTbl> dateContains = ScoreInfoSpecifications.dateContains(condition.getDateStart(), condition.getDateEnd());
+
+		Specifications answerSpecification = Specifications.where(typeContains);
+		if (noContains != null) {
+			answerSpecification.and(noContains);
+		}
+		if (keyHashContains != null) {
+			answerSpecification.and(keyHashContains);
+		}
+		if (scoreContains != null) {
+			answerSpecification.and(scoreContains);
+		}
+		if (nameContains != null) {
+			answerSpecification.and(nameContains);
+		}
+		if (dateContains != null) {
+			answerSpecification.and(dateContains);
+		}
 		Page<AnswerInfoTbl> page = answerInfoRepository.findAll(answerSpecification, pageable);
 		return page;
 	}

@@ -4,6 +4,7 @@ import jp.co.valtech.sudoku.core.config.CommonConstant;
 import jp.co.valtech.sudoku.core.config.enums.Type;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.list.primitive.ImmutableIntList;
 import org.eclipse.collections.api.list.primitive.MutableIntList;
@@ -36,11 +37,9 @@ public class ESListWrapUtil {
 		for (int count = 0; count < size; count++) {
 			MutableList<String> list = getCellList(size, count, CommonConstant.UPPER);
 			if (warmEaten == CommonConstant.ZERO) {
-//				list.forEach(s -> result.add(s));
-				list.forEach(result::add);// メソッド参照に置き換え
+				list.forEach(result::add);
 			} else {
-//				list.shuffleThis().take(warmEaten).toSortedList().each(s -> result.add(s));
-				list.shuffleThis().take(warmEaten).toSortedList().each(result::add);// メソッド参照に置き換え
+				list.shuffleThis().take(warmEaten).toSortedList().each(result::add);
 			}
 		}
 		return result;
@@ -51,8 +50,12 @@ public class ESListWrapUtil {
 	 * @return
 	 */
 	public static MutableList<MutableList<String>> createCells(int selectType) {
-		int size = Type.getType(selectType).getSize();
 		MutableList<MutableList<String>> resultList = Lists.mutable.empty();
+		@Nullable Type type = Type.getType(selectType);
+		if (type == null) {
+			return resultList;
+		}
+		int size = type.getSize();
 		for (int count = 0; count < size; count++) {
 			MutableList<String> list = getCellList(size, count, CommonConstant.LOWER);
 			resultList.add(list);
