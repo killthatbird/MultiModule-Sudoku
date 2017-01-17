@@ -3,7 +3,7 @@ buildscript {
         // SpringBoot framework
         springBootVersion = "1.4.3.RELEASE"// 2016,1223
 
-        // Other
+        // Others
         // mySql
         // mysql-connector-java
         mysqlVersion = "6.0.5"// 2016,1113
@@ -19,6 +19,8 @@ buildscript {
         checkerframeworkVersion = "2.1.7"// 2017,0108
         // Selenide
         selenideVersion = "4.2"// 2016,1226
+        // Selenium
+        seleniumVersion = "3.0.1"// 2017,0117
     }
     repositories {
         jcenter()
@@ -77,7 +79,11 @@ subprojects {
         checkerFrameworkAnnotatedJDK
         annotationProcessors
     }
-
+    // spring-boot-starter-webをoverride
+    ext['flyway.version'] = '4.0.3'// 2017,0117
+    ext['lombok.version'] = '1.16.12'// 2017,0117
+    ext['mysql.version'] = '6.0.5'// 2017,0117
+    ext['selenium.version'] = '3.0.1'// 2017,0117
     ext['thymeleaf.version'] = '3.0.3.RELEASE'// 2016,1205
     ext['thymeleaf-layout-dialect.version'] = '2.1.2'// 2016,1220
     ext['thymeleaf-extras-java8time.version'] = '3.0.0.RELEASE'
@@ -119,7 +125,11 @@ subprojects {
 
         // Selenide
         testCompile("com.codeborne:selenide:$selenideVersion")
-
+        // Selenium
+        testCompile("org.seleniumhq.selenium:selenium-server:$seleniumVersion")
+        // SafariDriver
+        testCompile("org.seleniumhq.selenium:selenium-safari-driver:$seleniumVersion")
+        // ModelMapper
         compile("com.github.jmnarloch:modelmapper-spring-boot-starter:1.1.0")
 
     }
