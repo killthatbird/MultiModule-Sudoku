@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'war'
     id "org.flywaydb.flyway" version "4.0.3"
 }
 apply plugin: "com.moowork.node"
@@ -9,5 +10,8 @@ flyway {
     driver = 'com.mysql.cj.jdbc.Driver'
     user = ''
     url = 'jdbc:mysql://localhost:3306/SUDOKU?useSSL=false'
+}
+war {
+    archiveName = 'Sudoku.war'
 }
 mainClassName = 'jp.co.valtech.sudoku.web.WebApp'

@@ -1,7 +1,7 @@
 buildscript {
     ext {
         // SpringBoot framework
-        springBootVersion = "1.4.3.RELEASE"// 2016,1223
+        springBootVersion = "1.4.4.RELEASE"// 2016,0127
 
         // Others
         // mySql
@@ -16,9 +16,9 @@ buildscript {
         // EclipseCollections
         ecVersion = "8.0.0"// 2016,1011
         // CheckerFramework
-        checkerframeworkVersion = "2.1.7"// 2017,0108
+        checkerframeworkVersion = "2.1.8"// 2017,0125
         // Selenide
-        selenideVersion = "4.2"// 2016,1226
+        selenideVersion = "4.2.1"// 2017,0129
         // Selenium
         seleniumVersion = "3.0.1"// 2017,0117
     }
@@ -40,8 +40,8 @@ plugins {
     id 'pmd'
     id 'project-report'
     id 'war'
-    id "com.moowork.grunt" version "1.0.1"
-    id "com.moowork.node" version "1.0.1"
+    id "com.moowork.grunt" version "1.1.1"
+    id "com.moowork.node" version "1.1.1"
     id "org.sonarqube" version "2.2.1"
     id "org.springframework.boot" version "1.4.3.RELEASE"
 }
@@ -79,15 +79,7 @@ subprojects {
         checkerFrameworkAnnotatedJDK
         annotationProcessors
     }
-    // spring-boot-starter-webをoverride
-    ext['flyway.version'] = '4.0.3'// 2017,0117
-    ext['lombok.version'] = '1.16.12'// 2017,0117
-    ext['mysql.version'] = '6.0.5'// 2017,0117
-    ext['selenium.version'] = '3.0.1'// 2017,0117
-    ext['thymeleaf.version'] = '3.0.3.RELEASE'// 2016,1205
-    ext['thymeleaf-layout-dialect.version'] = '2.1.2'// 2016,1220
-    ext['thymeleaf-extras-java8time.version'] = '3.0.0.RELEASE'
-    ext['thymeleaf-extras-data-attribute.version'] = '2.0.1'
+
     dependencies {
 
         // SpringBoot projects
@@ -101,6 +93,7 @@ subprojects {
         compile("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
         testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+        runtime("org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
 
         // Others
@@ -177,6 +170,10 @@ project(':micro-batch') {
     }
 }
 
+project(':micro-core') {
+    dependencies {
+    }
+}
 project(':micro-web') {
     dependencies {
         compile project(':micro-core')
