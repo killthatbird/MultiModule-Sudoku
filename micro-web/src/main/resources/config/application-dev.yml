@@ -73,10 +73,11 @@ spring:
 # ----------------------------------------
 server:
   port: 8081
+  context-path: /Sudoku
   ssl:
     enable: true
     key-store: keystore.p12
-    key-store-password: mabubu
+    key-store-password:
     keyStoretype: PKCS12
     keyAlias: tomcat
     protocol: TLS
