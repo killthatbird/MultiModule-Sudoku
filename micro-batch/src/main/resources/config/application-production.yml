@@ -24,6 +24,21 @@ spring:
     auto: true
   beaninfo:
     ignore: true
+  devtools:
+    livereload:
+      enabled: false
+      port: 35729
+    restart:
+      enabled: false
+      poll-interval: 1000
+    quiet-period: 400
+  remote:
+    debug:
+      enabled: false
+      local-port: 8000
+    restart:
+      enabled: false
+      secret-header-name: X-AUTH-TOKEN
   profiles: pro
   http:
     encoding:
@@ -75,12 +90,12 @@ spring:
 server:
   port: 8082
   ssl:
-    enable: true
-    key-store: keystore.p12
+    enable: false
+    key-store:
     key-store-password:
-    keyStoretype: PKCS12
-    keyAlias: tomcat
-    protocol: TLS
+    keyStoretype:
+    keyAlias:
+    protocol:
   tomcat:
     accesslog:
       directory: logs
@@ -106,6 +121,8 @@ security:
 # ENDPOINTS (AbstractEndpoint subclasses)
 # ----------------------------------------
 endpoints:
+  auditevents:
+    enabled: true
   enabled: true
   actuator:
     enabled: true
@@ -123,6 +140,8 @@ endpoints:
     enabled: true
     path: /jolokia
     sensitive: true
+  loggers:
+    enabled: true
   logfile:
     enabled: true
     path: /logfile
@@ -131,7 +150,10 @@ endpoints:
     filter:
       enabled: true
       gauge-submissions: merged
-      counter-submissions: merged
+    　counter-submissions: merged
+management:
+  security:
+    enabled: false
 # ----------------------------------------
 # DATA PROPERTIES
 # ----------------------------------------
