@@ -23,6 +23,21 @@ spring:
     auto: true
   beaninfo:
     ignore: true
+  devtools:
+     livereload:
+       enabled: false
+       port:
+     restart:
+       enabled: false
+       poll-interval: 1000
+     quiet-period: 400
+  remote:
+     debug:
+       enabled: false
+       local-port: 8000
+     restart:
+       enabled: false
+       secret-header-name: X-AUTH-TOKEN
   profiles: production
   http:
     encoding:
@@ -75,12 +90,12 @@ server:
   port: 8081
   context-path: /Sudoku
   ssl:
-    enable: true
-    key-store: keystore.p12
+    enable: false
+    key-store:
     key-store-password:
-    keyStoretype: PKCS12
-    keyAlias: tomcat
-    protocol: TLS
+    keyStoretype:
+    keyAlias:
+    protocol:
   tomcat:
     accesslog:
       directory: logs
@@ -139,7 +154,7 @@ flyway:
   enabled: true
   baseline-version: 1.1
   check-location: false
-  locations: classpath:db/migration
+  locations: classpath:db/migration/mysql
   url: jdbc:mysql://localhost:3306/SUDOKU
   username:
   sql-migration-prefix: V
