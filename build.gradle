@@ -1,14 +1,14 @@
 buildscript {
     ext {
         // SpringBoot framework
-        springBootVersion = "1.4.4.RELEASE"// 2016,0127
+        springBootVersion = "1.5.1.RELEASE"// 2017,0131
 
         // Others
         // mySql
         // mysql-connector-java
         mysqlVersion = "6.0.5"// 2016,1113
         // Lombok
-        lombokVersion = "1.16.12"// 2016,1203
+        lombokVersion = "1.16.14"// 2017,0211
         // Flyway
         flywayVersion = "4.0.3"// 2017,0103
         // Quartz
@@ -18,7 +18,7 @@ buildscript {
         // CheckerFramework
         checkerframeworkVersion = "2.1.8"// 2017,0125
         // Selenide
-        selenideVersion = "4.2.1"// 2017,0129
+        selenideVersion = "4.3"// 2017,0211
         // Selenium
         seleniumVersion = "3.0.1"// 2017,0117
     }
@@ -43,7 +43,7 @@ plugins {
     id "com.moowork.grunt" version "1.1.1"
     id "com.moowork.node" version "1.1.1"
     id "org.sonarqube" version "2.2.1"
-    id "org.springframework.boot" version "1.4.3.RELEASE"
+    id "org.springframework.boot" version "1.5.1.RELEASE"
 }
 
 allprojects {
@@ -95,6 +95,8 @@ subprojects {
         compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
         runtime("org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion")
         compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+
+        compile("org.springframework.boot:spring-boot-devtools:$springBootVersion")
 
         // Others
         // JDBC Drivers
