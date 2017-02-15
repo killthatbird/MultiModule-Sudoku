@@ -4,8 +4,10 @@ plugins {
     id 'war'
     id "org.flywaydb.flyway" version "4.0.3"
 }
+
 apply plugin: "com.moowork.node"
-apply plugin: "com.moowork.grunt"
+apply plugin: "com.moowork.gulp"
+
 flyway {
     driver = 'com.mysql.cj.jdbc.Driver'
     user = ''
@@ -14,4 +16,20 @@ flyway {
 war {
     archiveName = 'Sudoku.war'
 }
+
+classes.dependsOn gulp_build
+
+node {
+    version = '7.4.0'
+    download = true
+    workDir = file("${projectDir}/src/main/resources")
+    nodeModulesDir = file("${projectDir}/src/main/resources")
+}
+
+gulp {
+    workDir = file("${projectDir}/src/main/resources")
+    colors = true
+    bufferOutput = false
+}
+
 mainClassName = 'jp.co.valtech.sudoku.web.WebApp'

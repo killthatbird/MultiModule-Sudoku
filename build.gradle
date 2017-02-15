@@ -25,9 +25,6 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath("org.springframework:springloaded:1.2.6.RELEASE")
-    }
 }
 
 plugins {
@@ -40,8 +37,9 @@ plugins {
     id 'pmd'
     id 'project-report'
     id 'war'
-    id "com.moowork.grunt" version "1.1.1"
+    id "com.gradle.build-scan" version "1.6"
     id "com.moowork.node" version "1.1.1"
+    id "com.moowork.gulp" version "1.1.1"
     id "org.sonarqube" version "2.2.1"
     id "org.springframework.boot" version "1.5.1.RELEASE"
 }
@@ -149,6 +147,11 @@ subprojects {
             scopes.PROVIDED.plus += [configurations.annotationProcessors]
         }
     }
+}
+
+buildScan {
+    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+    licenseAgree = 'yes'
 }
 
 sonarqube {
