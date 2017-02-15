@@ -18,6 +18,7 @@ war {
 }
 
 classes.dependsOn gulp_build
+gulp_build.dependsOn npm_install
 
 node {
     version = '7.4.0'
