@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'war'
-    id "org.flywaydb.flyway" version "4.0.3"
+    id "org.flywaydb.flyway" version "4.1.2"
 }
 
 apply plugin: "com.moowork.node"
