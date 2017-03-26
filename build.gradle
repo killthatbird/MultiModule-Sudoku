@@ -8,13 +8,13 @@ buildscript {
         // mysql-connector-java
         mysqlVersion = "6.0.6"// 2017,0313
         // Lombok
-        lombokVersion = "1.16.14"// 2017,0211
+        lombokVersion = "1.16.16"// 2017,0326
         // Flyway
         flywayVersion = "4.1.2"// 2017,0313
         // Quartz
         quartzVersion = "2.2.3"// 2017,0103
         // EclipseCollections
-        ecVersion = "8.0.0"// 2016,1011
+        ecVersion = "8.1.0"// 2017,0326
         // CheckerFramework
         checkerframeworkVersion = "2.1.9"// 2017,0313
         // Selenide
@@ -160,6 +160,11 @@ sonarqube {
         property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
     }
+}
+
+checkstyle {
+    configFile file('downloaded_google_checks.xml')
+    showViolations = true
 }
 
 pmd {

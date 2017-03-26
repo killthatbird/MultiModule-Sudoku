@@ -24,20 +24,20 @@ spring:
   beaninfo:
     ignore: true
   devtools:
-     livereload:
-       enabled: false
-       port:
-     restart:
-       enabled: false
-       poll-interval: 1000
-     quiet-period: 400
+       livereload:
+         enabled: false
+         port:
+       restart:
+         enabled: false
+         poll-interval: 1000
+       quiet-period: 400
   remote:
-     debug:
-       enabled: false
-       local-port: 8000
-     restart:
-       enabled: false
-       secret-header-name: X-AUTH-TOKEN
+       debug:
+         enabled: false
+         local-port: 8000
+       restart:
+         enabled: false
+         secret-header-name: X-AUTH-TOKEN
   profiles: production
   http:
     encoding:
@@ -90,7 +90,7 @@ server:
   port: 8081
   context-path: /Sudoku
   ssl:
-    enable: false
+    enabled: false
     key-store:
     key-store-password:
     keyStoretype:
