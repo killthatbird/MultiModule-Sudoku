@@ -16,11 +16,11 @@ buildscript {
         // EclipseCollections
         ecVersion = "8.1.0"// 2017,0326
         // CheckerFramework
-        checkerframeworkVersion = "2.1.9"// 2017,0313
+        checkerframeworkVersion = "2.1.10"// 2017,0413
         // Selenide
-        selenideVersion = "4.3"// 2017,0211
+        selenideVersion = "4.4.2"// 2017,0413
         // Selenium
-        seleniumVersion = "3.0.1"// 2017,0117
+        seleniumVersion = "3.3.1"// 2017,0413
     }
     repositories {
         jcenter()
@@ -110,6 +110,7 @@ subprojects {
         // EclipseCollections
         compile("org.eclipse.collections:eclipse-collections:$ecVersion")
         compile("org.eclipse.collections:eclipse-collections-api:$ecVersion")
+        testCompile("org.eclipse.collections:eclipse-collections-testutils:$ecVersion")
         // CheckerFramework
         checkerFrameworkAnnotatedJDK("org.checkerframework:jdk8:$checkerframeworkVersion")
         annotationProcessors("org.checkerframework:checker:$checkerframeworkVersion")
@@ -191,5 +192,5 @@ project(':micro-web') {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.4.1'
+    gradleVersion = '3.5'
 }
