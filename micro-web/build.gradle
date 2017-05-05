@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'war'
-    id "org.flywaydb.flyway" version "4.1.2"
+    id "org.flywaydb.flyway" version "4.2.0"
 }
 
 apply plugin: "com.moowork.node"
@@ -10,7 +10,7 @@ apply plugin: "com.moowork.gulp"
 
 flyway {
     driver = 'com.mysql.cj.jdbc.Driver'
-    user = ''
+    user = 'root'
     url = 'jdbc:mysql://localhost:3306/SUDOKU?useSSL=false'
 }
 war {

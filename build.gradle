@@ -1,7 +1,7 @@
 buildscript {
     ext {
         // SpringBoot framework
-        springBootVersion = "1.5.2.RELEASE"// 2017,0313
+        springBootVersion = "1.5.3.RELEASE"// 2017,0505
 
         // Others
         // mySql
@@ -10,17 +10,17 @@ buildscript {
         // Lombok
         lombokVersion = "1.16.16"// 2017,0326
         // Flyway
-        flywayVersion = "4.1.2"// 2017,0313
+        flywayVersion = "4.2.0"// 2017,0505
         // Quartz
-        quartzVersion = "2.2.3"// 2017,0103
+        quartzVersion = "2.3.0"// 2017,0505
         // EclipseCollections
         ecVersion = "8.1.0"// 2017,0326
         // CheckerFramework
-        checkerframeworkVersion = "2.1.10"// 2017,0413
+        checkerframeworkVersion = "2.1.11"// 2017,0505
         // Selenide
-        selenideVersion = "4.4.2"// 2017,0413
+        selenideVersion = "4.4.3"// 2017,0505
         // Selenium
-        seleniumVersion = "3.3.1"// 2017,0413
+        seleniumVersion = "3.4.0"// 2017,0505
     }
     repositories {
         jcenter()
@@ -37,11 +37,11 @@ plugins {
     id 'pmd'
     id 'project-report'
     id 'war'
-    id "com.gradle.build-scan" version "1.6"
+    id "com.gradle.build-scan" version "1.7.1"
     id "com.moowork.node" version "1.1.1"
     id "com.moowork.gulp" version "1.1.1"
-    id "org.sonarqube" version "2.2.1"
-    id "org.springframework.boot" version "1.5.2.RELEASE"
+    id "org.sonarqube" version "2.4"
+    id "org.springframework.boot" version "1.5.3.RELEASE"
 }
 
 allprojects {
