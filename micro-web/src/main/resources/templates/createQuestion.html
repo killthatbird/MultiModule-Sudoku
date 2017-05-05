@@ -51,7 +51,8 @@
             </div>
         </div>
         <div class="well bs-component">
-            <form class="form-horizontal" id="createForm" method="post" action="#" th:action="@{/playNumberPlace}"
+            <form class="form-horizontal" id="createForm" method="post" action="#"
+                  th:action="@{/playNumberPlace}"
                   th:object="${createForm}" autocomplete="off" data-toggle="validator">
                 <fieldset>
                     <div class="row form-group">
@@ -59,7 +60,9 @@
                         <label class="col-lg-2 control-label" for="selectType">タイプ</label>
                         <div class="col-lg-4">
                             <select class="form-control" id="selectType" th:name="selectType"
-                                    data-error="セレクトボックスは必須選択です。" required>
+                                    data-error="セレクトボックスは必須選択です。"
+                                    th:data-error="#{selectType.input.required}"
+                                    required>
                                 <option value="">---</option>
                                 <option th:each="type : ${selectTypes}"
                                         th:text="${type.key}"
@@ -78,7 +81,9 @@
                         <label class="col-lg-2 control-label" for="selectLevel">レベル</label>
                         <div class="col-lg-4">
                             <select class="form-control" id="selectLevel" th:name="selectLevel"
-                                    data-error="セレクトボックスは必須選択です。" required>
+                                    data-error="セレクトボックスは必須選択です。"
+                                    th:data-error="#{selectLevel.input.required}"
+                                    required>
                                 <option value="">---</option>
                                 <option th:each="level : ${selectLevels}"
                                         th:text="${level.key}"
@@ -101,9 +106,10 @@
                 </fieldset>
             </form>
         </div>
-        <script type="text/javascript">
+        <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
             $('#selectType').tooltip({
-                title: '数独のタイプ種別を選択します。'
+                title: [[ #{selectType.default.message} ]]
             }).on({
                 "hide.bs.tooltip": function() {
                     if ($(this).is(":focus")) return false;
@@ -113,7 +119,7 @@
                 }
             });
             $('#selectLevel').tooltip({
-                title: '数独の難易度種別を選択します。'
+                title: [[ #{selectLevel.default.message} ]]
             }).on({
                 "hide.bs.tooltip": function() {
                     if ($(this).is(":focus")) return false;
@@ -122,16 +128,7 @@
                     $(this).tooltip('hide');
                 }
             });
-
-
-
-
-
-
-
-
-
-
+        /*]]>*/
         </script>
     </div>
 </div>

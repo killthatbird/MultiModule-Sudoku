@@ -21,7 +21,7 @@ classes.dependsOn gulp_build
 gulp_build.dependsOn npm_install
 
 node {
-    version = '7.4.0'
+    version = '7.10.0'
     download = true
     workDir = file("${projectDir}/src/main/resources")
     nodeModulesDir = file("${projectDir}/src/main/resources")

@@ -42,17 +42,16 @@
     <div th:replace="./common/_temp :: nav"/>
     <div class="bs-docs-section">
         <div class="row">
-
             <div class="col-lg-12">
                 <ul class="breadcrumb">
                     <li class="active">セレクト</li>
                     <li>コンプリート</li>
                 </ul>
             </div>
-
         </div>
         <div class="well bs-component">
-            <form class="form-horizontal" id="createForm" method="post" action="#" th:action="@{/completeAnswer}"
+            <form class="form-horizontal" id="createForm" method="post" action="#"
+                  th:action="@{/completeAnswer}"
                   th:object="${createForm}" autocomplete="off" data-toggle="validator">
                 <fieldset>
                     <div class="row form-group">
@@ -60,7 +59,9 @@
                         <label class="col-lg-2 control-label" for="selectType">タイプ</label>
                         <div class="col-lg-4">
                             <select class="form-control" id="selectType" th:name="selectType"
-                                    data-error="セレクトボックスは必須選択です。" required>
+                                    data-error="セレクトボックスは必須選択です。"
+                                    th:data-error="#{selectType.input.required}"
+                                    required>
                                 <option value="">---</option>
                                 <option th:each="type : ${selectTypes}"
                                         th:text="${type.key}"
@@ -77,18 +78,19 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-4">
-                            <input type="hidden" th:id="selectLevel" th:name="selectLevel" th:value="easy"/>
-                            <button type="reset" class="btn btn-warning">リセット</button>
-                            <button type="submit" class="btn btn-success" onclick="javascript:double(this)">メイク！
-                            </button>
+                            <input type="hidden" th:id="selectLevel" th:name="selectLevel"
+                                   th:value="easy"/>
+                            <button type="reset" id="reset" class="btn btn-warning">リセット</button>
+                            <button type="submit" id="submit" class="btn btn-success">メイク！</button>
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
-        <script type="text/javascript">
+        <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
             $('#selectType').tooltip({
-                title: '数独のタイプ種別を選択します。'
+                title: [[ #{selectType.default.message} ]]
             }).on({
                 "hide.bs.tooltip": function() {
                 if ($(this).is(":focus")) return false;
@@ -97,20 +99,7 @@
                 $(this).tooltip('hide');
               }
             });
-
-            function double(btn){
-                btn.disabled=true;
-                $('#createForm').submit();
-            }
-
-
-
-
-
-
-
-
-
+        /*]]>*/
         </script>
     </div>
 </div>

@@ -64,8 +64,8 @@
                         <div class="col-lg-8 col-lg-offset-4">
                             <input type="hidden" th:id="type" th:name="type" th:value="*{type}"/>
                             <input type="hidden" th:id="keyHash" th:name="keyHash" th:value="*{keyHash}"/>
-                            <button type="reset" class="btn btn-warning">リセット</button>
-                            <button type="submit" class="btn btn-success">エンター</button>
+                            <button type="reset" id="reset" class="btn btn-warning">リセット</button>
+                            <button type="submit" id="submit" class="btn btn-success">エンター</button>
                         </div>
                     </fieldset>
                 </form>
@@ -91,13 +91,6 @@
                         )
                 }
             );
-
-
-
-
-
-
-
         </script>
     </div>
 </div>

@@ -58,7 +58,10 @@
                         <div class="row form-group">
                             <label class="col-lg-3 control-label" for="selectLevel">レベル</label>
                             <div class="col-lg-3">
-                                <select class="form-control" id="selectLevel" th:name="selectLevel">
+                                <select class="form-control" id="selectLevel" th:name="selectLevel"
+                                        data-error="セレクトボックスは必須選択です。"
+                                        th:data-error="#{selectLevel.input.required}"
+                                        required>
                                     <option value="">---</option>
                                     <option th:each="level : ${selectLevels}"
                                             th:text="${level.key}"
@@ -68,6 +71,7 @@
                                 </select>
                                 <span th:if="${#fields.hasErrors('selectLevel')}" class="help-block"
                                       th:errors="*{selectLevel}">error!</span>
+                                <div class="help-block with-errors"></div>
                             </div>
                             <div class="col-lg-6"></div>
                         </div>
@@ -77,28 +81,29 @@
                             <div class="col-lg-8 col-lg-offset-4">
                                 <input type="hidden" th:id="type" th:name="type" th:value="*{type}"/>
                                 <input type="hidden" th:id="keyHash" th:name="keyHash" th:value="*{keyHash}"/>
-                                <button type="reset" class="btn btn-default">リセット</button>
-                                <button type="submit" class="btn btn-primary">プレイ！</button>
+                                <button type="reset" id="reset" class="btn btn-default">リセット
+                                </button>
+                                <button type="submit" id="submit" class="btn btn-primary">プレイ！
+                                </button>
                             </div>
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
-        <script type="text/javascript">
-            function double(btn){
-                btn.disabled=true;
-                $('#createForm').submit();
-            }
-
-
-
-
-
-
-
-
-
+        <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+            $('#selectLevel').tooltip({
+                title: [[ #{selectLevel.default.message} ]]
+            }).on({
+                "hide.bs.tooltip": function() {
+                    if ($(this).is(":focus")) return false;
+                },
+                "blur": function() {
+                    $(this).tooltip('hide');
+                }
+            });
+        /*]]>*/
         </script>
     </div>
 </div>

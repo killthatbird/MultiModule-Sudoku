@@ -57,7 +57,9 @@
                            th:id="${cell}" th:name="${cell}" th:value="${cellValue}"/>
                     <td th:if="${cellValue}=='0'" th:id="${cell}" th:name="${cell}">
                         <select class="form-control" th:id="${cell}" th:name="${cell}"
-                                data-error="セレクトボックスは必須選択です。" required>
+                                data-error="セレクトボックスは必須選択です。"
+                                th:data-error="#{cell.input.required}"
+                                required>
                             <option value="">---</option>
                             <option th:each="num : ${selectNums}"
                                     th:text="${num}" th:value="${num}"

@@ -116,43 +116,31 @@
         </form>
         <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
-        $('#pagination-prev').click(function() {
-            setPagenation(/*[[ ${page.number - 1} ]]*/,/*[[ ${page.size} ]]*/);
-            $('#searchForm').submit();
-        });
-        $('#pagination-1').click(function() {
-            setPagenation(/*[[ ${ph.page1PageValue} ]]*/,/*[[ ${page.size} ]]*/);
-            $('#searchForm').submit();
-        });
-        $('#pagination-2').click(function() {
-            setPagenation(/*[[ ${ph.page1PageValue + 1} ]]*/,/*[[ ${page.size} ]]*/);
-            $('#searchForm').submit();
-        });
-        $('#pagination-3').click(function() {
-            setPagenation(/*[[ ${ph.page1PageValue + 2} ]]*/,/*[[ ${page.size} ]]*/);
-            $('#searchForm').submit();
-        });
-        $('#pagination-next').click(function() {
-            setPagenation(/*[[ ${page.number + 1} ]]*/,/*[[ ${page.size} ]]*/);
-            $('#searchForm').submit();
-        });
-        function setPagenation(pageNumber,pageSize) {
-            $('#pageNumber').val(pageNumber);
-            $('#pageSize').val(pageSize);
-        }
+            $('#pagination-prev').click(function() {
+                setPagenation(/*[[ ${page.number - 1} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-1').click(function() {
+                setPagenation(/*[[ ${ph.page1PageValue} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-2').click(function() {
+                setPagenation(/*[[ ${ph.page1PageValue + 1} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-3').click(function() {
+                setPagenation(/*[[ ${ph.page1PageValue + 2} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            $('#pagination-next').click(function() {
+                setPagenation(/*[[ ${page.number + 1} ]]*/,/*[[ ${page.size} ]]*/);
+                $('#searchForm').submit();
+            });
+            function setPagenation(pageNumber,pageSize) {
+                $('#pageNumber').val(pageNumber);
+                $('#pageSize').val(pageSize);
+            }
         /*]]>*/
-
-
-
-
-
-
-
-
-
-
-
-
         </script>
     </div>
 </div>
