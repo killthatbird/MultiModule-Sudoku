@@ -1,7 +1,7 @@
 buildscript {
     ext {
         // SpringBoot framework
-        springBootVersion = "1.5.3.RELEASE"// 2017,0505
+        springBootVersion = "1.5.4.RELEASE"// 2017,0702
 
         // Others
         // mySql
@@ -16,9 +16,9 @@ buildscript {
         // EclipseCollections
         ecVersion = "8.1.0"// 2017,0326
         // CheckerFramework
-        checkerframeworkVersion = "2.1.11"// 2017,0505
+        checkerframeworkVersion = "2.1.12"// 2017,0702
         // Selenide
-        selenideVersion = "4.4.3"// 2017,0505
+        selenideVersion = "4.5.1"// 2017,0702
         // Selenium
         seleniumVersion = "3.4.0"// 2017,0505
     }
@@ -192,5 +192,5 @@ project(':micro-web') {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
+    gradleVersion = '4.0'
 }

@@ -2,7 +2,7 @@ package jp.co.valtech.sudoku.web.controller;
 
 import jp.co.valtech.sudoku.core.service.AnswerInfoService;
 import jp.co.valtech.sudoku.core.service.ScoreInfoService;
-import jp.co.valtech.sudoku.web.config.enums.Forward;
+import jp.co.valtech.sudoku.web.config.enums.UrlConstants.Forward;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
