@@ -1,17 +1,23 @@
 package jp.co.valtech.sudoku.web.controller;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import jp.co.valtech.sudoku.web.WebApp;
-import jp.co.valtech.sudoku.web.controller.page.*;
+import jp.co.valtech.sudoku.web.controller.page.BestScorePage;
+import jp.co.valtech.sudoku.web.controller.page.ChoiceQuestionPage;
+import jp.co.valtech.sudoku.web.controller.page.CompleteAnswerPage;
+import jp.co.valtech.sudoku.web.controller.page.CreateAnswerPage;
+import jp.co.valtech.sudoku.web.controller.page.CreateQuestionPage;
+import jp.co.valtech.sudoku.web.controller.page.PlayNumberPlacePage;
+import jp.co.valtech.sudoku.web.controller.page.SearchAnswerPage;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 public class PageControllerSelenideTest implements PageControllerTestInterface {
 
@@ -45,9 +51,9 @@ public class PageControllerSelenideTest implements PageControllerTestInterface {
 	@Override
 	public void testCreateAnswer() {
 		CreateAnswerPage page = CreateAnswerPage.open();
-		assertThat(CreateAnswerPage.title(), is("createAnswer"));
+			assertThat(CreateAnswerPage.title(), is("okCreateAnswer"));
 
-		Selenide.screenshot("createAnswer");
+			Selenide.screenshot("okCreateAnswer");
 		Selenide.close();
 	}
 

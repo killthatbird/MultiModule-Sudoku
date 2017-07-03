@@ -1,1 +1,1 @@
-include 'micro-core', 'micro-web', 'micro-batch'
+include 'micro-core', 'micro-web', 'micro-batch', 'micro-api'

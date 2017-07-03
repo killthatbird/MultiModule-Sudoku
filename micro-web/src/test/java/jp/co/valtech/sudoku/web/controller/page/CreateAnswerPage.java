@@ -7,7 +7,7 @@ import com.codeborne.selenide.Selenide;
  */
 public class CreateAnswerPage {
 
-	private static final String URL = "/createAnswer";
+		private static final String URL = "/okCreateAnswer";
 
 
 	public static String title() {

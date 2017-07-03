@@ -65,6 +65,7 @@ public class PageController extends BaseController {
 		 */
 		@InitBinder
 		public void initBinder(WebDataBinder binder) {
+
 				Optional<Object> object = Optional.ofNullable(binder.getTarget());
 				object.filter((notNullBinder) -> CreateForm.class.equals(notNullBinder.getClass()))
 						.ifPresent(o -> binder.addValidators(new CreateFormValidator()));
@@ -85,7 +86,7 @@ public class PageController extends BaseController {
 		 * @since 1.0
 		 */
 		@GetMapping(value = {UrlConstants.URL_TOP})
-		public String top() {
+		public String okTop() {
 				return Forward.TOP.getPath();
 		}
 
@@ -94,10 +95,31 @@ public class PageController extends BaseController {
 		 * @version 1.0
 		 * @since 1.0
 		 */
+		@PostMapping(value = {UrlConstants.URL_TOP})
+		public String notTop() {
+				return "error";
+		}
+
+		/**
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
 		@GetMapping(value = {UrlConstants.URL_CHOICE_QUESTION})
-		public String choice() {
+		public String okChoice() {
 				return Forward.CHOICE_QUESTION.getPath();
 		}
+
+		/**
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
+		@PostMapping(value = {UrlConstants.URL_CHOICE_QUESTION})
+		public String notChoice() {
+				return "error";
+		}
+
 
 		/**
 		 * /createAnswerの初期ページへ遷移します。
@@ -107,7 +129,7 @@ public class PageController extends BaseController {
 		 * @since 1.0
 		 */
 		@GetMapping(value = {UrlConstants.URL_CREATE_ANSWER})
-		public String createAnswer(
+		public String okCreateAnswer(
 				CreateForm form,
 				Model model) {
 
@@ -119,6 +141,26 @@ public class PageController extends BaseController {
 		}
 
 		/**
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
+		@PostMapping(value = {UrlConstants.URL_CREATE_ANSWER})
+		public String notCreateAnswer() {
+				return "error";
+		}
+
+		/**
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
+		@GetMapping(value = {UrlConstants.URL_COMPLETE_ANSWER})
+		public String notCompleteAnswer() {
+				return "error";
+		}
+
+		/**
 		 * ANSWER_INFO_TBLとSCORE_INFO_TBLにレコードを追加し、作成完了ページへ遷移します。
 		 * 一意制約等が発生しレコードが追加できなかった時は、エラーメッセージを作成完了ページへ表示します。
 		 *
@@ -127,7 +169,7 @@ public class PageController extends BaseController {
 		 * @since 1.0
 		 */
 		@PostMapping(value = {UrlConstants.URL_COMPLETE_ANSWER})
-		public String completeAnswer(
+		public String okCompleteAnswer(
 				@Validated @ModelAttribute CreateForm form,
 				BindingResult bindingResult,
 				Model model)
@@ -135,7 +177,7 @@ public class PageController extends BaseController {
 
 				if (bindingResult.hasErrors()) {
 						model.addAttribute("validationError", "不正な値が入力されました。");
-						return createAnswer(form, model);
+						return okCreateAnswer(form, model);
 				} else {
 						LogicHandleBean handleBean = new LogicHandleBean()
 								.setForm(form)
@@ -155,7 +197,7 @@ public class PageController extends BaseController {
 		 * @since 1.0
 		 */
 		@GetMapping(value = {UrlConstants.URL_CREATE_QUESTION})
-		public String createQuestion(
+		public String okCreateQuestion(
 				CreateForm form,
 				Model model) {
 
@@ -167,10 +209,30 @@ public class PageController extends BaseController {
 		}
 
 		/**
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
+		@PostMapping(value = {UrlConstants.URL_CREATE_QUESTION})
+		public String notCreateQuestion() {
+				return "error";
+		}
+
+		/**
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
+		@GetMapping(value = {UrlConstants.URL_PLAY_NUMBER_PLACE})
+		public String notPlayNumberPlace() {
+				return "error";
+		}
+
+		/**
 		 * /playNumberPlaceの初期ページへ遷移します。
 		 */
 		@PostMapping(value = {UrlConstants.URL_PLAY_NUMBER_PLACE})
-		public String playNumberPlace(
+		public String okPlayNumberPlace(
 				@Validated @ModelAttribute CreateForm form,
 				BindingResult bindingResult,
 				Model model)
@@ -178,7 +240,7 @@ public class PageController extends BaseController {
 
 				if (bindingResult.hasErrors()) {
 						model.addAttribute("validationError", "不正な値が入力されました。");
-						return createQuestion(form, model);
+						return okCreateQuestion(form, model);
 				} else {
 						LogicHandleBean handleBean = new LogicHandleBean()
 								.setForm(form)
@@ -190,10 +252,20 @@ public class PageController extends BaseController {
 		}
 
 		/**
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
+		@GetMapping(value = {"isCheck"})
+		public String notIsCheck() {
+				return "error";
+		}
+
+		/**
 		 * /isCheckの初期ページへ遷移します。
 		 */
 		@PostMapping(value = {"isCheck"})
-		public String isCheck(
+		public String okIsCheck(
 				@Validated @ModelAttribute PlayForm form,
 				BindingResult bindingResult,
 				Model model)

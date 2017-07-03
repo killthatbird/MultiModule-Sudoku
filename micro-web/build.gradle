@@ -14,7 +14,7 @@ flyway {
     url = 'jdbc:mysql://localhost:3306/SUDOKU?useSSL=false'
 }
 war {
-    archiveName = 'Sudoku.war'
+    archiveName = 'SudokuWeb.war'
 }
 
 classes.dependsOn gulp_build

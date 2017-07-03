@@ -191,6 +191,12 @@ project(':micro-web') {
     }
 }
 
+project(':micro-api') {
+    dependencies {
+        compile project(':micro-core')
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '4.0'
 }

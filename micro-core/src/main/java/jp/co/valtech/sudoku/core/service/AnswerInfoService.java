@@ -1,5 +1,7 @@
 package jp.co.valtech.sudoku.core.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import jp.co.valtech.sudoku.core.bean.NumberPlaceBean;
 import jp.co.valtech.sudoku.core.bean.SearchConditionBean;
 import jp.co.valtech.sudoku.core.domain.AnswerInfoTbl;
@@ -15,9 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * ANSWER_INFO_TBLへのサービスクラスです。
@@ -70,6 +69,10 @@ public class AnswerInfoService extends ServiceBase {
 	public List<AnswerInfoTbl> select(NumberPlaceBean numberplaceBean) {
 		return answerInfoRepository.findByAnswerKey(numberplaceBean.getAnswerKey());
 	}
+
+		public List<AnswerInfoTbl> findByAnswerKey(String answerKey) {
+				return answerInfoRepository.findByAnswerKey(answerKey);
+		}
 
 	/**
 	 * ANSWER_INFO_TBLへTypeで検索を行います。
