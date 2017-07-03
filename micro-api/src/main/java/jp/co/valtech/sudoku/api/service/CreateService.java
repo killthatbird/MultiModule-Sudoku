@@ -1,10 +1,8 @@
 package jp.co.valtech.sudoku.api.service;
 
-import java.util.List;
 import java.util.Optional;
 import jp.co.valtech.sudoku.core.bean.NumberPlaceBean;
 import jp.co.valtech.sudoku.core.domain.AnswerInfoTbl;
-import jp.co.valtech.sudoku.core.domain.ScoreInfoTbl;
 import jp.co.valtech.sudoku.core.exception.SudokuApplicationException;
 import jp.co.valtech.sudoku.core.service.AnswerInfoService;
 import jp.co.valtech.sudoku.core.service.ScoreInfoService;
@@ -33,41 +31,43 @@ public class CreateService {
 		@Autowired
 		ScoreInfoService scoreInfoService;
 
-		public ResponseEntity<NumberPlaceBean> generate(int selectType)
+		/**
+		 * typeから数独を生成します。
+		 *
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
+		public ResponseEntity<NumberPlaceBean> generate(int type)
 				throws SudokuApplicationException {
 				Optional<NumberPlaceBean> numberPlaceBeanOpt = Optional
-						.ofNullable(new Sudoku(selectType).generate());
+						.ofNullable(new Sudoku(type).generate());
 				if (numberPlaceBeanOpt.isPresent()) {
-						return new ResponseEntity<NumberPlaceBean>(numberPlaceBeanOpt.get(),
+						return new ResponseEntity<>(numberPlaceBeanOpt.get(),
 								HttpStatus.CREATED);
 				} else {
-						return new ResponseEntity<NumberPlaceBean>(new NumberPlaceBean(),
+						return new ResponseEntity<>(new NumberPlaceBean(),
 								HttpStatus.NO_CONTENT);
 				}
 		}
 
-		public ResponseEntity<Boolean> isExist(String answerKey) {
-				List<AnswerInfoTbl> list = answerInfoService.findByAnswerKey(answerKey);
-				if (list.isEmpty()) {
-						return new ResponseEntity<>(false, HttpStatus.OK);
-				} else {
-						return new ResponseEntity<>(true, HttpStatus.OK);
-				}
-		}
-
+		/**
+		 * 数独をRDBに保存します。
+		 *
+		 * @param numberPlaceBean
+		 *
+		 * @author uratamanabu
+		 * @version 1.0
+		 * @since 1.0
+		 */
 		@Transactional
 		public ResponseEntity<String> insertAnswerAndScore(NumberPlaceBean numberPlaceBean) {
 				try {
 						AnswerInfoTbl answerInfoTbl = answerInfoService.insert(numberPlaceBean);
-						Optional<ScoreInfoTbl> scoreInfoTblOpt = Optional
-								.ofNullable(scoreInfoService.insert(numberPlaceBean));
-						if (scoreInfoTblOpt.isPresent()) {
-								return new ResponseEntity<>(answerInfoTbl.getKeyHash(), HttpStatus.OK);
-						} else {
-								return new ResponseEntity<>("", HttpStatus.OK);
-						}
+						scoreInfoService.insert(numberPlaceBean);
+						return new ResponseEntity<>(answerInfoTbl.getKeyHash(), HttpStatus.OK);
 				} catch (Exception e) {
-						return new ResponseEntity<>("", HttpStatus.OK);
+						return new ResponseEntity<>("", HttpStatus.CONFLICT);
 				}
 		}
 }

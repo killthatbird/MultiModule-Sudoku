@@ -1,5 +1,6 @@
 package jp.co.valtech.sudoku.core.service;
 
+import java.time.LocalDateTime;
 import jp.co.valtech.sudoku.core.bean.NumberPlaceBean;
 import jp.co.valtech.sudoku.core.config.CommonConstant;
 import jp.co.valtech.sudoku.core.domain.ScoreInfoTbl;
@@ -8,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 /**
  * SCORE_INFO_TBLへのサービスクラスです。
@@ -47,7 +46,7 @@ public class ScoreInfoService extends ServiceBase {
 		scoreInfoTbl.setName(CommonConstant.EMPTY_STR);
 		scoreInfoTbl.setMemo(CommonConstant.EMPTY_STR);
 		scoreInfoTbl.setUpdateDate(LocalDateTime.now());
-		return scoreRepository.saveAndFlush(scoreInfoTbl);
+			return scoreRepository.save(scoreInfoTbl);
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class ScoreInfoService extends ServiceBase {
 	public ScoreInfoTbl update(NumberPlaceBean numberplaceBean) {
 		ScoreInfoTbl scoreInfoTbl = modelMapper.map(numberplaceBean, ScoreInfoTbl.class);
 		scoreInfoTbl.setUpdateDate(LocalDateTime.now());
-		return scoreRepository.saveAndFlush(scoreInfoTbl);
+			return scoreRepository.save(scoreInfoTbl);
 	}
 
 	/**
@@ -94,7 +93,7 @@ public class ScoreInfoService extends ServiceBase {
 	 */
 	public ScoreInfoTbl update(ScoreInfoTbl scoreInfoTbl) {
 		scoreInfoTbl.setUpdateDate(LocalDateTime.now());
-		return scoreRepository.saveAndFlush(scoreInfoTbl);
+			return scoreRepository.save(scoreInfoTbl);
 	}
 
 }
