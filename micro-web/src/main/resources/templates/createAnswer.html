@@ -10,13 +10,13 @@
     <meta name="description" content="記事の概要">
     <!-- OGP -->
     <meta property="og:description" content="記事の概要">
-    <meta property="og:title" content="記事タイトル">
+    <meta property="og:title" content="createAnswer">
     <meta property="og:url" content="http://example.com">
     <meta property="og:image" content="http://example.com/images/thumbnail.png">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="EXAMPLE">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="publisher" href="//plus.google.com/00000000000">
     <link rel="icon" href="/icon/favicon.ico">
     <link rel="apple-touch-icon" href="/icon/icon.png">
@@ -90,7 +90,7 @@
         <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
             $('#selectType').tooltip({
-                title: [[ #{selectType.default.message} ]]
+                title: [[#{selectType.default.message}]]
             }).on({
                 "hide.bs.tooltip": function() {
                 if ($(this).is(":focus")) return false;

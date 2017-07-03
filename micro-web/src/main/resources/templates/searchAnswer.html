@@ -234,10 +234,10 @@
             </form>
         </div>
         <div th:replace="./common/_SearchList :: base"/>
-        <script type="text/javascript">
+        <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
             $('#selectType').tooltip({
-                title: [[ #{selectType.default.message} ]]
+                title: [[#{selectType.default.message}]]
             }).on({
                 "hide.bs.tooltip": function() {
                 if ($(this).is(":focus")) return false;
