@@ -6,3 +6,14 @@
 /build
 .idea
 *.iml
+*.log
+/micro-api/apiApp.log
+/micro-web/webApp.log
+/micro-batch/batch.log
+gradle/
+gradlew
+gradlew.bat
+micro-batch/keystore.p12
+micro-core/build/
+micro-web/build/
+micro-web/keystore.p12
